@@ -18,9 +18,4 @@ StaticLibrary {
     cpp.cxxLanguageVersion: "c++20"
     cpp.enableRtti: false
     cpp.includePaths: ["api", "inc"]
-    Group {     // Properties for the produced executable
-        fileTagsFilter: "application"
-        qbs.install: true
-        qbs.installDir: "lib"
-    }
 }

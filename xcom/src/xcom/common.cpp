@@ -16,8 +16,11 @@ registrar_impl::~registrar_impl() noexcept
 
 void registrar_impl::add(item* item)
 {
-    lock_t lock(container_.mutex);
-    container_.insert(item);
+    {
+        lock_t lock(container_.mutex);
+        container_.insert(item);
+    }
+
     std::cout << "registrar - added " << std::hex << item << std::dec << '\n';
 }
 
@@ -26,9 +29,9 @@ void registrar_impl::remove(item* item)
     {
         lock_t lock(container_.mutex);
         container_.erase(item);
-        std::cout << "registrar - removed " << std::hex << item << std::dec << '\n';
     }
 
+    std::cout << "registrar - removed " << std::hex << item << std::dec << '\n';
     item->~item();
 }
 
@@ -78,12 +81,12 @@ const progress_info& common::receiving_progress() const noexcept
 
 void common::async_cancel_sending()
 {
-
+    // not implemented
 }
 
 void common::async_cancel_receiving()
 {
-
+    // not implemented
 }
 
 void common::disconnect()
@@ -121,16 +124,15 @@ void common::async_send(buffer_view buffer)
         boost::asio::async_write(socket_, boost::asio::const_buffer(buffer.data(), buffer.size()),
                [this](error_code error, std::size_t bytes_transferred)
         {
+            sending_progress_.bytes_transferred += bytes_transferred;
+            sending_error_ = convert_error(error);
             try
             {
                 //std::cout << "bytes_transferred=" << bytes_transferred << '\n';
-                sending_progress_.bytes_transferred += bytes_transferred;
-                sending_error_ = convert_error(error);
                 settings().sending_handler(this, sending_error_, sending_progress_);
                 if (sending_error_)
                 {
                     give_up();
-                    return;
                 }
             }
             catch(...)

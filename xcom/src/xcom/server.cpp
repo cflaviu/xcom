@@ -58,19 +58,19 @@ const settings_t& item_impl::settings() const
 void item_impl::accept()
 {
     socket_.emplace(io_context_);
-    acceptor_.async_accept(*socket_, [this](error_code error)
+    acceptor_.async_accept(*socket_, [this](error_code error_code)
     {
         try
         {
             xcom::session::item_unique_ptr new_session;
-            if (!error)
+            if (!error_code)
             {
                 new_session.reset(new session(this, settings_, std::move(*socket_)));
             }
 
-            error_t local_error = convert_error(error);
-            settings_.session_handler(new_session.get(), local_error);
-            if (!local_error)
+            error_t error = convert_error(error_code);
+            settings_.session_handler(new_session.get(), error);
+            if (!error)
             {
                 registrar_.add(new_session.release());
             }

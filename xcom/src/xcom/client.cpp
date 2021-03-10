@@ -30,13 +30,13 @@ session::session(xcom::session::registrar* registrar, settings_t settings, io_co
             }
             else
             {
-                std::cout << "error connecting a\n";
+                std::cout << "error connecting a\nsession closed";
                 delete this;
             }
         }
         catch(...)
         {
-            std::cout << "error connecting b\n";
+            std::cout << "error connecting b\nsession closed";
             delete this;
         }
     });

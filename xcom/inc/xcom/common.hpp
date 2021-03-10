@@ -20,7 +20,7 @@ namespace xcom
     using address_v6_t = boost::asio::ip::address_v6;
     using buffer_t = std::vector<std::uint8_t>;
 
-    inline error_t convert_error(const error_code& code)
+    inline error_t convert_error(const error_code& code) noexcept
     {
         return code.value();
     }
