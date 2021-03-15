@@ -2,8 +2,7 @@
 #include <memory>
 #include <iostream>
 
-namespace xcom {
-namespace client {
+namespace xcom::client {
 
 std::unique_ptr<item> item::create()
 {
@@ -71,4 +70,4 @@ void item_impl::run()
     io_context_.run();
 }
 
-}}
+}

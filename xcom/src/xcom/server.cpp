@@ -1,8 +1,7 @@
 #include "xcom/server.hpp"
 #include <iostream>
 
-namespace xcom {
-namespace server {
+namespace xcom::server {
 
 std::unique_ptr<item> item::create(settings_t settings)
 {
@@ -90,4 +89,4 @@ void item_impl::run()
     io_context_.run();
 }
 
-}}
+}

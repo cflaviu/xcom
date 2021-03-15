@@ -63,6 +63,7 @@ namespace xcom
         public:
             virtual ~item() noexcept = default;
 
+            /// @note The first 4 bytes of the buffer are reserved.
             virtual void async_send(buffer_view) = 0;
             virtual void async_cancel_sending() = 0;
             virtual error_t sending_error() const noexcept = 0;

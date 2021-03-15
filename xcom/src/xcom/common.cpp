@@ -1,8 +1,7 @@
 #include "xcom/common.hpp"
 #include <iostream>
 
-namespace xcom {
-namespace session {
+namespace xcom::session {
 
 registrar_impl::~registrar_impl() noexcept
 {
@@ -230,4 +229,4 @@ void common::async_receive()
     }
 }
 
-}}
+}
